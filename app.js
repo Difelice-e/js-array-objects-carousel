@@ -27,31 +27,36 @@ const slideItem = [
     {
         item: 'img/01.jpg',
         title: 'Svezia',
-        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam inventore eligendi ex ad ullam, cumque provident totam omnis, magnam dolores dolorum corporis.'
+        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam inventore eligendi ex ad ullam, cumque provident totam omnis, magnam dolores dolorum corporis.',
+        active: true
     },
 
     {
         item: 'img/02.jpg',
         title: 'Svizzera',
-        text: 'Lorem ipsum'
+        text: 'Lorem ipsum',
+        active: false
     },
 
     {
         item: 'img/03.jpg',
         title: 'Gran Bretagna',
-        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
+        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
+        active: false
     },
 
     {
         item: 'img/04.jpg',
         title: 'Germania',
-        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
+        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
+        active: false
     },
 
     {
         item: 'img/05.jpg',
         title: 'Paradise',
-        text: 'Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam inventore eligendi ex ad ullam,'
+        text: 'Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam inventore eligendi ex ad ullam,',
+        active: false
     }
 ]
 
@@ -93,7 +98,7 @@ const sliderWrapper = document.querySelector('.slider-wrapper');
     
 // };
 
-slideItem.forEach(({item, title, text}, index) => {
+slideItem.forEach(({item, title, text, active}, index) => {
     divElement = document.createElement('div');
     console.log(divElement);
     const divInfo = document.createElement('div');
@@ -108,9 +113,13 @@ slideItem.forEach(({item, title, text}, index) => {
     
     console.log(sliderWrapper);
 
-    if (index == 0) {
-        divElement.classList.add("active");
-        currentIndex = 0;
+    // if (index == 0) {
+    //     divElement.classList.add("active");
+    //     currentIndex = 0;
+    // }
+
+    if (active) {
+        divElement.classList.add('active');
     }
     
     sliderWrapper.append(divElement);
@@ -128,15 +137,19 @@ let prevControl;
 let nextControl;
 const controlWrapper = document.querySelector('.control-wrapper');
 
-slideItem.forEach(({item}, index) => {
+slideItem.forEach(({item, active}, index) => {
     
     
     imgThumbElement = document.createElement('img');
     imgThumbElement.src = `${item}`;
 
-    if (index == 0) {
-        imgThumbElement.classList.add("active");
-        currentIndex = 0;
+    // if (index == 0) {
+    //     imgThumbElement.classList.add("active");
+    //     currentIndex = 0;
+    // }
+
+    if (active) {
+        imgThumbElement.classList.add('active');
     }
 
     controlWrapper.append(imgThumbElement);
@@ -163,49 +176,69 @@ let imgThumbElements = document.querySelectorAll('.control-wrapper > img');
 next.addEventListener("click", function() {
     console.log("next!")
     
-    
-    if ( currentIndex < slideItem.length -1 ) {
-        
-        divElements[currentIndex].classList.remove("active");
-        imgThumbElements[currentIndex].classList.remove("active");
+    // divElements[currentIndex].classList.remove("active");
+    // imgThumbElements[currentIndex].classList.remove("active");
 
+    slideItem[currentIndex].active = false;
+    console.log(slideItem[currentIndex].active)
+
+    if ( currentIndex < slideItem.length -1 ) {
         currentIndex++
     
-        divElements[currentIndex].classList.add("active");
-        imgThumbElements[currentIndex].classList.add("active");
+        // divElements[currentIndex].classList.add("active");
+        // imgThumbElements[currentIndex].classList.add("active");
+
+        slideItem[currentIndex].active = true;
     } else {
-        divElements[currentIndex].classList.remove("active");
-        imgThumbElements[currentIndex].classList.remove("active");
-    
         currentIndex = 0;
     
-        divElements[currentIndex].classList.add("active");
-        imgThumbElements[currentIndex].classList.add("active");
+        // divElements[currentIndex].classList.add("active");
+        // imgThumbElements[currentIndex].classList.add("active");
+
+        slideItem[currentIndex].active = true;
     }
-       
+    
+    controlActive();
 });
+
+function controlActive() {
+    slideItem.forEach( (element, index, array) => {
+        if (element.active) {
+            divElements[index].classList.add("active");
+            imgThumbElements[index].classList.add("active");
+        } else {
+            divElements[index].classList.remove('active');
+            imgThumbElements[index].classList.remove("active");
+        }
+    } )
+}
 
 const prev = document.querySelector('.prev')
 
 
 prev.addEventListener("click", function() {
     console.log("prev!")
-    if ( currentIndex > 0 ) {
-        divElements[currentIndex].classList.remove("active");
-        imgThumbElements[currentIndex].classList.remove("active");
+    // divElements[currentIndex].classList.remove("active");
+    // imgThumbElements[currentIndex].classList.remove("active");
+
+    slideItem[currentIndex].active = false;
     
+    if ( currentIndex > 0 ) {
         currentIndex--
     
-        divElements[currentIndex].classList.add("active");
-        imgThumbElements[currentIndex].classList.add("active");
+        // divElements[currentIndex].classList.add("active");
+        // imgThumbElements[currentIndex].classList.add("active");
+
+        slideItem[currentIndex].active = true;
     } else {
-        divElements[currentIndex].classList.remove("active");
-        imgThumbElements[currentIndex].classList.remove("active");
-    
         currentIndex = slideItem.length - 1;
     
-        divElements[currentIndex].classList.add("active");
-        imgThumbElements[currentIndex].classList.add("active");
+        // divElements[currentIndex].classList.add("active");
+        // imgThumbElements[currentIndex].classList.add("active");
+
+        slideItem[currentIndex].active = true;
     }
+
+    controlActive();
       
 });
