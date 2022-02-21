@@ -1,3 +1,9 @@
+*{
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -6,13 +12,14 @@ main {
 }
 
 .slider {
-    height: 50vh;
-    width: 65vw;
-    display: flex;   
+    height: 600px;
+    width: 800px;
+    display: flex;
+    border: 2px solid grey;
 }
 
 .slider-wrapper {
-    flex-grow: 1;
+    width: 650px;
 }
 
 .item {
@@ -52,14 +59,21 @@ main {
 }
 
 .control-wrapper {
-    width: 280px;
+    width: 200px;
     position: relative;
+    background-color: black;
 }
 
 .control-wrapper img{
     width: 100%;
     height: 20%;
     display: block;
+    opacity: 0.4;
+}
+
+.control-wrapper img.active {
+    opacity: 1;
+    border: 2px solid white;
 }
 
 .control-wrapper span {
@@ -67,10 +81,11 @@ main {
     width: 40px;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    background-color: grey;
+    background-color: rgb(182, 182, 182);
     text-align: center;
     line-height: 40px;
     position: absolute;
+    color: white;
 }
 
 .prev {
